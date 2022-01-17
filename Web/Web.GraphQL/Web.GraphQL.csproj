@@ -8,6 +8,7 @@
     <PackageReference Include="GraphQL" Version="4.7.1" />
     <PackageReference Include="GraphQL.NewtonsoftJson" Version="4.7.1" />
     <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="5.2.0" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="4.7.1" />
   </ItemGroup>
 
 </Project>

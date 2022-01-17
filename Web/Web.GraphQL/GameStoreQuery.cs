@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using GraphQL;
+using GraphQL.Types;
 
 namespace Web.GraphQL
 {
@@ -15,6 +16,15 @@ namespace Web.GraphQL
                 name:"grownUp",
                 resolve: context => "Groviing up"
                 );
+
+            Field<ItemType>(
+                "item",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tag" }),
+                resolve: context =>
+                {
+                    var tag = context.GetArgument<string>("tag");
+                    return new DataSource().GetItemByTag(tag);
+                });
         }
     }
 }

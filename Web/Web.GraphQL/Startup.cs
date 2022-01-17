@@ -4,6 +4,7 @@ using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -24,10 +25,16 @@ namespace Web.GraphQL
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<ISchema, GameStoreSchema>();
             services.AddTransient<GameStoreQuery>();
+            services.AddTransient<ItemType>();
 
             services.AddGraphQL(options =>
             {
                 options.EndPoint = "/graphql";
+            });
+
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
             });
         }
 
