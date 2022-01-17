@@ -20,6 +20,15 @@ namespace Web.GraphQL
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
+            services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<ISchema, GameStoreSchema>();
+            services.AddTransient<GameStoreQuery>();
+
+            services.AddGraphQL(options =>
+            {
+                options.EndPoint = "/graphql";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,30 +41,7 @@ namespace Web.GraphQL
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapPost("/graphql", async context => {
-                    
-                    var request = await JsonSerializer
-                    .DeserializeAsync<GraphQLRequest>(
-                        context.Request.Body,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
-
-                    var schema = new Schema { Query = new GameStoreQuery() };
-
-                    var result = await new DocumentExecuter()
-                                    .ExecuteAsync(doc =>
-                                    {
-                                        doc.Schema = schema;
-                                        doc.Query = request.Query;
-                                    }).ConfigureAwait(false);
-
-                    await new DocumentWriter(indent: true).WriteAsync(context.Response.Body, result);
-                });
-            });
+            app.UseGraphQL();
         }
     }
 }
