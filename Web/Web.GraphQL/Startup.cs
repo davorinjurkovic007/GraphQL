@@ -39,6 +39,11 @@ namespace Web.GraphQL
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseDefaultFiles();
+            //app.UseStaticFiles();
+
+            app.UseGraphQLGraphiQL();
+
             app.UseRouting();
 
             app.UseGraphQL();
