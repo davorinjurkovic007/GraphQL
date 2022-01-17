@@ -21,5 +21,11 @@ namespace Web.GraphQL
         {
             return Items.First(i => i.Tag.Equals(tag));
         }
+
+        public Item AddItem(Item item)
+        {
+            Items.Add(item);
+            return item;
+        }
     }
 }

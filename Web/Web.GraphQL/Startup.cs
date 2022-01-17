@@ -26,6 +26,8 @@ namespace Web.GraphQL
             services.AddSingleton<ISchema, GameStoreSchema>();
             services.AddTransient<GameStoreQuery>();
             services.AddTransient<ItemType>();
+            services.AddTransient<GameStoreMutation>();
+            services.AddTransient<ItemInputType>();
 
             services.AddGraphQL(options =>
             {
