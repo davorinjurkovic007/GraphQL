@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Web.GraphQL.RepositoryFiles;
+using Microsoft.EntityFrameworkCore;
+using GraphQL.DataLoader;
 
 namespace Web.GraphQL
 {
@@ -23,8 +26,11 @@ namespace Web.GraphQL
         {
             services.AddSingleton<IDocumentWriter, DocumentWriter>();
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+            services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+            services.AddSingleton<DataLoaderDocumentListener>();
             services.AddSingleton<ISchema, GameStoreSchema>();
             services.AddTransient<GameStoreQuery>();
+            services.AddTransient<ItemInputType>();
             services.AddTransient<ItemType>();
             services.AddTransient<GameStoreMutation>();
             services.AddTransient<ItemInputType>();
@@ -38,6 +44,9 @@ namespace Web.GraphQL
             {
                 options.AllowSynchronousIO = true;
             });
+
+            services.AddTransient<IRepository, Repository>();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

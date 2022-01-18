@@ -1,30 +1,37 @@
 ﻿using GraphQL;
 using GraphQL.Types;
+using GraphQL.DataLoader;
+using System.Collections.Generic;
+using Web.GraphQL.RepositoryFiles;
 
 namespace Web.GraphQL
 {
     public class GameStoreQuery : ObjectGraphType
     {
-        public GameStoreQuery()
+        public GameStoreQuery(IRepository repository)
         {
             Field<StringGraphType>(
                 name: "name",
                 resolve: context => "Steam"
-             );
+            );
 
-            Field<StringGraphType>(
-                name:"grownUp",
-                resolve: context => "Groviing up"
-                );
-
-            Field<ItemType>(
+            FieldAsync<ItemType>(
                 "item",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "tag" }),
-                resolve: context =>
+                resolve: async context =>
                 {
                     var tag = context.GetArgument<string>("tag");
-                    return new DataSource().GetItemByTag(tag);
-                });
+                    return await repository.GetItemByTag(tag);
+                }
+            );
+
+            FieldAsync<ListGraphType<ItemType>, IReadOnlyCollection<Item>>(
+                "items",
+                resolve: async context =>
+                {
+                    return await repository.GetItems();
+                }
+            );
         }
     }
 }
