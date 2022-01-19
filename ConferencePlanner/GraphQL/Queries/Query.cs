@@ -17,8 +17,18 @@ namespace GraphQL
         public Task<List<Speaker>> GetSpeakers([ScopedService] ApplicationDbContext context) =>
             context.Speakers.ToListAsync();
 
+        /// <summary>
+        /// Wherever we handle id values we need to annotate them with the ID attribute in order to tell the execution 
+        /// engine what kind of ID this is. We also can do that in the fluent API by using the ID descriptor method a
+        /// field or argument descriptor.
+        /// descriptor.Field(t => t.FooId).ID("FOO");
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dataLoader"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<Speaker> GetSpeakerAsync(
-            int id,
+            [ID(nameof(Speaker))]  int id,
             SpeakerByIdDataLoader dataLoader,
             CancellationToken cancellationToken) =>
             dataLoader.LoadAsync(id, cancellationToken);

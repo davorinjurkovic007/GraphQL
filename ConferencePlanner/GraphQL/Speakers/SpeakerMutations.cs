@@ -1,9 +1,10 @@
 ﻿using GraphQL.Data;
 using GraphQL.Extensions;
 
-namespace GraphQL.Mutations
+namespace GraphQL.Speakers
 {
-    public class Mutation
+    [ExtendObjectType("Mutation")]
+    public class SpeakerMutations
     {
         /// <summary>
         /// By annotating UseApplicationDbContext we are essentially applying a Middleware to the field resolver pipeline. 

@@ -17,6 +17,12 @@ namespace GraphQL.Types
         protected override void Configure(IObjectTypeDescriptor<Speaker> descriptor)
         {
             descriptor
+               .ImplementsNode()
+                .IdField(t => t.Id)
+                .ResolveNode(async (ctx, id) => await ctx.DataLoader<SpeakerByIdDataLoader>()
+                .LoadAsync(id, ctx.RequestAborted));
+
+            descriptor
                 .Field(t => t.SessionSpeakers)
                 .ResolveWith<SpeakerResolvers>(t => t.GetSessionsAsync(default!, default!, default!, default))
                 .UseDbContext<ApplicationDbContext>()
