@@ -1,6 +1,8 @@
 using GraphQL;
 using GraphQL.Data;
+using GraphQL.DataLoader;
 using GraphQL.Mutations;
+using GraphQL.Types;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>
@@ -17,7 +19,10 @@ builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(options => opti
 
 builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
-                .AddMutationType<Mutation>();
+                .AddMutationType<Mutation>()
+                .AddType<SpeakerType>()
+                .AddDataLoader<SpeakerByIdDataLoader>()
+                .AddDataLoader<SessionByIdDataLoader>();
 
 var app = builder.Build();
 IConfiguration configuration = app.Configuration;
@@ -32,7 +37,7 @@ app.UseRouting();
 
 app.UseEndpoints(endPoints =>
 {
-    endPoints.MapGraphQL();
+    endPoints.MapGraphQL("/graf");
 });
 
 app.Run();

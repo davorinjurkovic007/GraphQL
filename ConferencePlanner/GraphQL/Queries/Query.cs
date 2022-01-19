@@ -1,4 +1,5 @@
 ﻿using GraphQL.Data;
+using GraphQL.DataLoader;
 using GraphQL.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +14,13 @@ namespace GraphQL
         /// <param name="context"></param>
         /// <returns></returns>
         [UseApplicationDbContext]
-        public Task<List<Speaker>> GetSpeakers([ScopedService] ApplicationDbContext context) => context.Speakers.ToListAsync();
+        public Task<List<Speaker>> GetSpeakers([ScopedService] ApplicationDbContext context) =>
+            context.Speakers.ToListAsync();
 
-
+        public Task<Speaker> GetSpeakerAsync(
+            int id,
+            SpeakerByIdDataLoader dataLoader,
+            CancellationToken cancellationToken) =>
+            dataLoader.LoadAsync(id, cancellationToken);
     }
 }
