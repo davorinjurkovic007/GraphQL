@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraphQL
 {
-    public class Query
+    [ExtendObjectType("Query")]
+    public class SpeakerQueries
     {
+        
         /// <summary>
         /// By annotating UseApplicationDbContext we are essentially applying a Middleware to the field resolver pipeline. 
         /// Important: Note, that we no longer are returning the IQueryable but are executing the IQueryable by using ToListAsync.
