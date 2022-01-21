@@ -19,5 +19,25 @@ namespace GraphQL.Tracks
 
             return new AddTrackPayload(track);
         }
+
+        [UseApplicationDbContext]
+        public async Task<RenameTrackPayload> ReanmeTrackAsync(
+            RenameTrackInput input,
+            [ScopedService] ApplicationDbContext context,
+            CancellationToken cancelToken)
+        {
+            Track? track = await context.Tracks.FindAsync(input.Id);
+
+            if (track is null)
+            {
+                throw new GraphQLException("Track not found.");
+            }
+
+            track.Name = input.Name;
+
+            await context.SaveChangesAsync(cancelToken);
+
+            return new RenameTrackPayload(track);
+        }
     }
 }

@@ -20,7 +20,8 @@ var connectionString = builder.Configuration.GetConnectionString("ConectionStrin
 builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddGraphQLServer()
-                .AddQueryType(d => d.Name("Query"))
+                .AddQueryType()
+                //.AddQueryType(d => d.Name("Query"))
                     .AddTypeExtension<SpeakerQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
                     .AddTypeExtension<SessionMutations>()

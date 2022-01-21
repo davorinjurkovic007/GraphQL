@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraphQL
 {
-    [ExtendObjectType("Query")]
+    [ExtendObjectType(OperationTypeNames.Query)]
     public class SpeakerQueries
     {
         
@@ -30,9 +30,9 @@ namespace GraphQL
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public Task<Speaker> GetSpeakerAsync(
-            [ID(nameof(Speaker))]  int id,
+            [ID(nameof(Speaker))]  int something,
             SpeakerByIdDataLoader dataLoader,
             CancellationToken cancellationToken) =>
-            dataLoader.LoadAsync(id, cancellationToken);
+            dataLoader.LoadAsync(something, cancellationToken);
     }
 }
