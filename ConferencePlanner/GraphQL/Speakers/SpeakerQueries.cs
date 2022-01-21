@@ -24,15 +24,18 @@ namespace GraphQL
         /// engine what kind of ID this is. We also can do that in the fluent API by using the ID descriptor method a
         /// field or argument descriptor.
         /// descriptor.Field(t => t.FooId).ID("FOO");
+        /// Error
+        /// https://stackoverflow.com/questions/64226770/error-the-id-1-has-an-invalid-format-when-querying-hotchocolate
+        /// 
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dataLoader"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public Task<Speaker> GetSpeakerAsync(
-            [ID(nameof(Speaker))]  int something,
+            int id,
             SpeakerByIdDataLoader dataLoader,
             CancellationToken cancellationToken) =>
-            dataLoader.LoadAsync(something, cancellationToken);
+            dataLoader.LoadAsync(id, cancellationToken);
     }
 }
