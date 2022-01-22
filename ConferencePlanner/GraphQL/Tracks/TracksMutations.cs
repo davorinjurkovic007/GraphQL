@@ -21,7 +21,7 @@ namespace GraphQL.Tracks
         }
 
         [UseApplicationDbContext]
-        public async Task<RenameTrackPayload> ReanmeTrackAsync(
+        public async Task<RenameTrackPayload> RenameTrackAsync(
             RenameTrackInput input,
             [ScopedService] ApplicationDbContext context,
             CancellationToken cancelToken)
