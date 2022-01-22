@@ -32,10 +32,16 @@ namespace GraphQL
         /// <param name="dataLoader"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<Speaker> GetSpeakerAsync(
-            int id,
+        public Task<Speaker> GetSpeakerByIdAsync(
+            [ID(nameof(Speaker))]  int id,
             SpeakerByIdDataLoader dataLoader,
             CancellationToken cancellationToken) =>
             dataLoader.LoadAsync(id, cancellationToken);
+
+        public async Task<IEnumerable<Speaker>> GetSpeakersByIdAsync(
+            [ID(nameof(Speaker))]int[] ids,
+            SpeakerByIdDataLoader dataLoader,
+            CancellationToken cancellationToken) =>
+            await dataLoader.LoadAsync(ids, cancellationToken);
     }
 }

@@ -21,9 +21,13 @@ namespace GraphQL.Types
             /////https://stackoverflow.com/questions/64226770/error-the-id-1-has-an-invalid-format-when-querying-hotchocolate
             ///https://stackoverflow.com/questions/65747359/running-graphql-query-returns-the-id-1-has-an-invalid-format
             ///The whole idea behind this is that we can use Id, in the safe way in cache. 
-            descriptor
-            .Field(f => f.Id).ID(nameof(Speaker));
+            //descriptor
+            //.Field(f => f.Id).ID(nameof(Speaker));
 
+            /// For explaining this part
+            /// https://chillicream.com/docs/hotchocolate/defining-a-schema/relay
+            /// https://relay.dev/docs/guides/graphql-server-specification/
+            /// https://graphql.org/learn/global-object-identification/
             descriptor
                .ImplementsNode()
                 .IdField(t => t.Id)
