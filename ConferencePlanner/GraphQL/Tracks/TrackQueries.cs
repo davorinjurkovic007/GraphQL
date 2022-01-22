@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GraphQL.Tracks
 {
-    [ExtendObjectType("Query")]
+    [ExtendObjectType(OperationTypeNames.Query)]
     public class TrackQueries
     {
         [UseApplicationDbContext]
