@@ -1,5 +1,5 @@
 # GraphQL
-GraphQL demo project
+GraphQL demo projects
 
 
 ## ConferencePlaner
