@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQL.Server.Ui.Voyager;
+using CommanderGQL.GraphQL.Platforms;
+using System.Data;
 
 namespace CommanderGQL
 {
@@ -33,7 +35,12 @@ namespace CommanderGQL
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
-                .AddProjections();
+                .AddMutationType<Mutation>()
+                .AddType<PlatformType>()
+                .AddType<GraphQL.Commands.CommandType>()
+                //.AddProjections();
+                .AddFiltering()
+                .AddSorting();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
