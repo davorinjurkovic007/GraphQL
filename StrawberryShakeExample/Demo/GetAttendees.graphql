@@ -1,0 +1,7 @@
+query GetAttendees {
+	attendees {
+		nodes {
+			firstName
+		}
+	}
+}

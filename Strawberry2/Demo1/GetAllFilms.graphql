@@ -1,0 +1,5 @@
+query AllFilms($filmId: ID) {
+  film(id: $filmId) {
+    title
+  }
+}
