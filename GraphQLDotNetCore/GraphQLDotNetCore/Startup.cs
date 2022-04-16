@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GraphQL.Server;
 using GraphQLDotNetCore.Contracts;
 using GraphQLDotNetCore.Entities;
+using GraphQLDotNetCore.GraphQL.GraphQLSchema;
 using GraphQLDotNetCore.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +36,13 @@ namespace GraphQLDotNetCore
 
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<AppSchema>();
+
+            services.AddGraphQL()
+                    .AddSystemTextJson()
+                    .AddGraphTypes(typeof(AppSchema), ServiceLifetime.Scoped);
+
 
             services.AddControllers()
                 .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
