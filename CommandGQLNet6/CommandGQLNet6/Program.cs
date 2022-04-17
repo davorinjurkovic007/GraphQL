@@ -1,5 +1,6 @@
 using CommandGQLNet6.Data;
 using CommandGQLNet6.GraphQL;
+using CommandGQLNet6.GraphQL.Commands;
 using CommandGQLNet6.GraphQL.Platforms;
 using GraphQL.Server.Ui.Voyager;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ builder.Services
     .AddGraphQLServer()
     .AddQueryType<Query>()
     .AddType<PlatformType>()
+    .AddType<CommandType>()
     .AddProjections();
 
 var app = builder.Build();
