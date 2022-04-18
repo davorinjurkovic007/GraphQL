@@ -1,4 +1,6 @@
-﻿namespace CommandGQLNet6.GraphQL.Commands
+﻿using CommandGQLNet6.Models;
+
+namespace CommandGQLNet6.GraphQL.Commands
 {
-    public record AddCommandPayload();
+    public record AddCommandPayload(Command Command);
 }

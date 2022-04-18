@@ -1,4 +1,5 @@
 ﻿using CommandGQLNet6.Data;
+using CommandGQLNet6.GraphQL.Commands;
 using CommandGQLNet6.GraphQL.Platforms;
 using CommandGQLNet6.Models;
 
@@ -18,6 +19,22 @@ namespace CommandGQLNet6.GraphQL
             await context.SaveChangesAsync();
 
             return new AddPlatformPayload(platform);
+        }
+
+        [UseDbContext(typeof(AppDbContext))]
+        public async Task<AddCommandPayload> AddCommandAsync(AddCommandInput input, [ScopedService] AppDbContext context)
+        {
+            var command = new Command
+            {
+                HowTo = input.HowTo,
+                CommandLine = input.CommandLine,
+                PlatformId = input.PlatformId
+            };
+
+            context.Commands.Add(command);
+            await context.SaveChangesAsync();
+            
+            return new AddCommandPayload(command);
         }
     }
 }
